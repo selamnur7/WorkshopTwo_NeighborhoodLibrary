@@ -1,5 +1,7 @@
 package com.ps;
 
+import java.util.Scanner;
+
 public class Book {
     private int id;
 
@@ -7,10 +9,24 @@ public class Book {
 
     private String title;
 
-    private boolean isCheckedOut;
+    private static boolean isCheckedOut;
 
     private String checkedOutTo;
 
+    public static void checkOut() {
+
+    }
+    public static void homeScreen() {
+        int option;
+        int i = 0;
+        System.out.println("Please choose an option: ");
+        System.out.println("\t(1) Show available books ");
+        System.out.println("\t(2) Show Checked out books ");
+        System.out.println("\t(3) Exit: ");
+
+        Scanner scanner = new Scanner(System.in);
+        option = scanner.nextInt();
+    }
 
     public Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo) {
         this.id = id;
@@ -45,7 +61,7 @@ public class Book {
         this.title = title;
     }
 
-    public boolean isCheckedOut() {
+    public static boolean isCheckedOut() {
         return isCheckedOut;
     }
 
