@@ -4,6 +4,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        boolean showHomeScreen = true;
+        int option1;
+
         Book book1 = new Book(1, "64b92c13", "A Game of Thrones",false, " " );
         Book book2 = new Book(2, "44b58i30", "The Maze Runner",false, " " );
 
@@ -15,7 +18,7 @@ public class Main {
         Book book6 = new Book(6, "89b68p33", "Gone Girl",false, " " );
         Book book7 = new Book(7, "42b56c81", "The Catcher in the Rye",false, " " );
 
-        Book book8 = new Book(8, "39b35k47", "The Lord of the Rings",false, " " );
+        Book book8 = new Book(8, "39b35k47", "The Lord of the Rings",true, "Joe Schmoe " );
         Book book9 = new Book(9, "73b59o15", "The Hunger Games",false, " " );
 
         Book book10 = new Book(10, "48b07g36", "The Road",false, " " );
@@ -37,34 +40,90 @@ public class Main {
         Book[] bookStock = {book1, book2, book3, book4, book5, book6, book7, book8, book9,
                 book10, book11, book12, book13, book14, book15, book16, book17, book18, book19, book20};
 
-        Book.homeScreen();
-        int option = 0;
-        int i = 0;
-        do {
-            switch (option) {
-                case 1:
-                    do {
-                        System.out.println("These are the available books");
-                        for (Book book : bookStock) {
-                            if (Book.isCheckedOut() == false) {
-                                System.out.println("ID: " + book.getId());
-                                System.out.println("ISBN: " + book.getIsbn());
-                                System.out.println("Title: " + book.getTitle());
-                                i++;
 
-                            } else if (Book.isCheckedOut() == true) {
-                                i++;
+
+        do {
+            // Home Screen
+            if (showHomeScreen == true) {
+                System.out.println("Welcome to the Library");
+                System.out.println("Press 1 for a list of Available books");
+                System.out.println("Press 2 for a list of checked out books");
+                System.out.println("Press 3 to exit");
+            }
+            Scanner scanner = new Scanner(System.in);
+            option1 = scanner.nextInt();
+
+
+            switch (option1){
+                case 1:
+                    for(int i = 0; i < bookStock.length; i++){
+                        if (!bookStock[i].isCheckedOut()){
+                            System.out.println("ID: " + bookStock[i].getId());
+                            System.out.println("ISBN: " + bookStock[i].getIsbn());
+                            System.out.println("Title: : " + bookStock[i].getTitle());
+
                             }
-                            while (i < 21) ;
-                            break;
+                        }
+                    System.out.println("Press 7 to check out a book, or 9 to exit");
+                    int checkOrNo = scanner.nextInt();
+
+                    if (checkOrNo == 7){
+                        System.out.println("What is the ID of the book you want to check out? ");
+                        int idCheckOut = scanner.nextInt();
+                        System.out.println("What is your first and last name? ");
+                        String nameCheckedOut = scanner.nextLine();
+                        for (int counter = 0; counter < bookStock.length; counter++){
+                            if (idCheckOut == bookStock[counter].id) {
+                                bookStock[counter].checkedOutTo = String.valueOf(true);
+                                bookStock[counter].checkedOutTo = nameCheckedOut;
+                            }
+                        }
+                    }
+                    break;
+
+                case 2:
+                    for(int b = 0; b < bookStock.length; b++){
+                        if (bookStock[b].isCheckedOut()){
+                            System.out.println("ID: " + bookStock[b].getId());
+                            System.out.println("ISBN: " + bookStock[b].getIsbn());
+                            System.out.println("Title: : " + bookStock[b].getTitle());
+                            showHomeScreen = false;
+
 
                         }
+                    }
+                    System.out.println("Press C to Check in a book, or X to go back to home page");
+                    String option2 = scanner.nextLine();
 
-                    } while (i < bookStock.length);
+
+                    if (option2.equalsIgnoreCase("c")){
+                            System.out.println("What is the ID of the book you are checking in? ");
+                        int borrowedbookID = scanner.nextInt();
+                        for (int newID = 0; newID < bookStock.length; newID++){
+                            if (borrowedbookID == bookStock[newID].id) {
+                                bookStock[newID].isCheckedOut = false;
+                                bookStock[newID].checkedOutTo = " ";
+                            }
+                        }
+                            showHomeScreen = true;
 
 
+                        }else if (option2.equalsIgnoreCase("x")){
+                            showHomeScreen = true;
+                        }
+
+
+                    break;
             }
-        }while (i < 21) ;
+
+
+
+
+
+
+
+        }while(option1 != 3);
+
 
 
     }

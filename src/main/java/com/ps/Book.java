@@ -1,31 +1,34 @@
 package com.ps;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Book {
-    private int id;
+     public int id;
 
-    private String isbn;
+    public String isbn;
 
-    private String title;
+    public String title;
 
-    private static boolean isCheckedOut;
+    public  boolean isCheckedOut;
 
-    private String checkedOutTo;
+    public String checkedOutTo;
 
-    public static void checkOut() {
+    public void checkOut() {
 
     }
-    public static void homeScreen() {
-        int option;
-        int i = 0;
-        System.out.println("Please choose an option: ");
-        System.out.println("\t(1) Show available books ");
-        System.out.println("\t(2) Show Checked out books ");
-        System.out.println("\t(3) Exit: ");
 
+    public static void checkOut(int name, Book[] bookStock){
+        System.out.println("What is the ID of the book you are checking in? ");
         Scanner scanner = new Scanner(System.in);
-        option = scanner.nextInt();
+        int borrowedbookID = scanner.nextInt();
+        for (int newID = 0; newID < bookStock.length; newID++) {
+            if (borrowedbookID == bookStock[newID].id) {
+                bookStock[newID].isCheckedOut = false;
+                bookStock[newID].checkedOutTo = " ";
+            }
+
+        }
     }
 
     public Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo) {
@@ -61,7 +64,7 @@ public class Book {
         this.title = title;
     }
 
-    public static boolean isCheckedOut() {
+    public boolean isCheckedOut() {
         return isCheckedOut;
     }
 
@@ -75,5 +78,15 @@ public class Book {
 
     public void setCheckedOutTo(String checkedOutTo) {
         this.checkedOutTo = checkedOutTo;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", checkedOutTo='" + checkedOutTo + '\'' +
+                '}';
     }
 }
